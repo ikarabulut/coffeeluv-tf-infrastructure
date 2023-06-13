@@ -11,6 +11,33 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_vpc" "example" {
+resource "aws_vpc" "main_vpc" {
   cidr_block = "172.16.0.0/16"
+}
+
+module "us-east-1a-network" {
+  source = "./modules/networking"
+  az-zone = "us-east-1a"
+  vpc-id = aws_vpc.main_vpc.id
+  public-bastion-subnet-cidr = "172.16.1.0/24"
+  private-app-subnet-cidr = "172.16.4.0/24"
+  private-db-subnet-cidr = "172.16.8.0/24"
+}
+
+module "us-east-1b-network" {
+  source = "./modules/networking"
+  az-zone = "us-east-1b"
+  vpc-id = aws_vpc.main_vpc.id
+  public-bastion-subnet-cidr = "172.16.2.0/24"
+  private-app-subnet-cidr = "172.16.5.0/24"
+  private-db-subnet-cidr = "172.16.9.0/24"
+}
+
+module "us-east-1c-network" {
+  source = "./modules/networking"
+  az-zone = "us-east-1c"
+  vpc-id = aws_vpc.main_vpc.id
+  public-bastion-subnet-cidr = "172.16.3.0/24"
+  private-app-subnet-cidr = "172.16.6.0/24"
+  private-db-subnet-cidr = "172.16.10.0/24"
 }

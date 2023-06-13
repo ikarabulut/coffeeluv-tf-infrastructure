@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"us-east-1a-network","Source":"./modules/networking","Dir":"modules/networking"},{"Key":"us-east-1b-network","Source":"./modules/networking","Dir":"modules/networking"},{"Key":"us-east-1c-network","Source":"./modules/networking","Dir":"modules/networking"}]}
