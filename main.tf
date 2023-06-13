@@ -11,7 +11,6 @@ provider "aws" {
   region = var.region
 }
 
-module "networking" {
-  source    = "./modules/networking"
-  namespace = var.namespace
+resource "aws_vpc" "example" {
+  cidr_block = "172.16.0.0/16"
 }
