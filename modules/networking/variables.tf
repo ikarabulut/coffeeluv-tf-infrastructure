@@ -22,3 +22,8 @@ variable private-db-subnet-cidr {
   description = "CIDR subnet for private db subnet"
   type = string
 }
+
+variable internet-gateway-id {
+  description = "vpc internet gateway id"
+  type = string
+}
