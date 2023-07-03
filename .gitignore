@@ -1,3 +1,2 @@
-.terraform/providers
-.terraform/modules
+/**/.terraform
 .DS_Store
