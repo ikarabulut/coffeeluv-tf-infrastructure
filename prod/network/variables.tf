@@ -1,6 +1,7 @@
 variable namespace {
   description = "The namespace for the infrastructure"
   type = string
+  default = "prod-coffeeluv-infra"
 }
 
 variable "region" {
