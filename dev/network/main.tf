@@ -30,7 +30,7 @@ resource "aws_internet_gateway" "gw" {
 }
 
 module "us-east-1a-network" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.0"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.1"
   az-zone = "us-east-1a"
   vpc-id = aws_vpc.main_vpc.id
   internet-gateway-id = aws_internet_gateway.gw.id
@@ -40,7 +40,7 @@ module "us-east-1a-network" {
 }
 
 module "us-east-1b-network" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.0"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.1"
   az-zone = "us-east-1b"
   vpc-id = aws_vpc.main_vpc.id
   internet-gateway-id = aws_internet_gateway.gw.id
@@ -50,7 +50,7 @@ module "us-east-1b-network" {
 }
 
 module "us-east-1c-network" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.0"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.1"
   az-zone = "us-east-1c"
   vpc-id = aws_vpc.main_vpc.id
   internet-gateway-id = aws_internet_gateway.gw.id
