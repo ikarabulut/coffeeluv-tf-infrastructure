@@ -41,3 +41,8 @@ module compute {
     private-app-subnet = module.network.us-east-1c-subnet-ids.private-app-subnet
   }
 }
+
+module "ecr_repository" {
+  source = "./repository"
+  namespace = var.namespace
+}
