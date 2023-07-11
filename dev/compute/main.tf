@@ -1,21 +1,3 @@
-terraform {
-  backend "s3" {
-    bucket         = "coffeeluv-tf-backend"
-    key            = "dev/compute/terraform.tfstate"
-    region         = "us-east-2"
-
-    dynamodb_table = "coffeeluv-locks"
-    encrypt        = true
-  }
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-}
-
 provider "aws" {
   region = var.region
 }
@@ -36,27 +18,27 @@ resource "local_file" "myLabKeyPairFile" {
 }
 
 module "us_east_1a_instances" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-3tiercompute.git?ref=v0.1.1"
-  public-subnet-cidr = "172.16.1.0/24"
-  private-subnet-cidr = "172.16.4.0/24"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-3tiercompute.git?ref=v0.2.0"
+  public-subnet-id = var.us-east-1a-subnet-ids.public-bastion-subnet
+  private-subnet-id = var.us-east-1a-subnet-ids.private-app-subnet
   key-name = aws_key_pair.myKeyPair.key_name
   bastion-sg-id = aws_security_group.BastionSG.id
   app-sg-id = aws_security_group.AppSG.id
 }
 
 module "us_east_1b_instances" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-3tiercompute.git?ref=v0.1.1"
-  public-subnet-cidr = "172.16.2.0/24"
-  private-subnet-cidr = "172.16.5.0/24"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-3tiercompute.git?ref=v0.2.0"
+  public-subnet-id = var.us-east-1b-subnet-ids.public-bastion-subnet
+  private-subnet-id = var.us-east-1b-subnet-ids.private-app-subnet
   key-name = aws_key_pair.myKeyPair.key_name
   bastion-sg-id = aws_security_group.BastionSG.id
   app-sg-id = aws_security_group.AppSG.id
 }
 
 module "us_east_1c_instances" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-3tiercompute.git?ref=v0.1.1"
-  public-subnet-cidr = "172.16.3.0/24"
-  private-subnet-cidr = "172.16.6.0/24"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-3tiercompute.git?ref=v0.2.0"
+  public-subnet-id = var.us-east-1c-subnet-ids.public-bastion-subnet
+  private-subnet-id = var.us-east-1c-subnet-ids.private-app-subnet
   key-name = aws_key_pair.myKeyPair.key_name
   bastion-sg-id = aws_security_group.BastionSG.id
   app-sg-id = aws_security_group.AppSG.id
@@ -65,7 +47,7 @@ module "us_east_1c_instances" {
 resource "aws_security_group" "BastionSG" {
     name        = "BastionSG"
     description = "Allow ssh"
-    vpc_id      = "172.16.0.0/16"
+    vpc_id      = var.vpc-id
     
     ingress {
         from_port   = "22"
@@ -85,7 +67,7 @@ resource "aws_security_group" "BastionSG" {
 resource "aws_security_group" "AppSG" {
     name        = "AppSG"
     description = "Allow ssh"
-    vpc_id      = "172.16.0.0/16"
+    vpc_id      = var.vpc-id
     
     ingress {
         from_port   = "22"

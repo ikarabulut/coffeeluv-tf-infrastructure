@@ -1,21 +1,3 @@
-terraform {
-  backend "s3" {
-    bucket         = "coffeeluv-tf-backend"
-    key            = "dev/network/terraform.tfstate"
-    region         = "us-east-2"
-
-    dynamodb_table = "coffeeluv-locks"
-    encrypt        = true
-  }
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-}
-
 provider "aws" {
   region = var.region
 }
@@ -30,7 +12,7 @@ resource "aws_internet_gateway" "gw" {
 }
 
 module "us-east-1a-network" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.1"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.2.0"
   az-zone = "us-east-1a"
   vpc-id = aws_vpc.main_vpc.id
   internet-gateway-id = aws_internet_gateway.gw.id
@@ -40,7 +22,7 @@ module "us-east-1a-network" {
 }
 
 module "us-east-1b-network" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.1"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.2.0"
   az-zone = "us-east-1b"
   vpc-id = aws_vpc.main_vpc.id
   internet-gateway-id = aws_internet_gateway.gw.id
@@ -50,7 +32,7 @@ module "us-east-1b-network" {
 }
 
 module "us-east-1c-network" {
-  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.1.1"
+  source = "git@github.com:ikarabulut-terraform-registry/terraform-aws-region3tiernetwork.git?ref=v0.2.0"
   az-zone = "us-east-1c"
   vpc-id = aws_vpc.main_vpc.id
   internet-gateway-id = aws_internet_gateway.gw.id
